@@ -1,24 +1,25 @@
-# mcp-thesportsdb
+# @pipeworx/thesportsdb
 
-TheSportsDB MCP — sports catalog (teams, players, events)
+TheSportsDB MCP — sports catalog across 50+ leagues: teams, players, events, venues, league tables. Free tier with public key.
 
-Part of [Pipeworx](https://pipeworx.io) — an MCP gateway connecting AI agents to 673+ live data sources.
+Part of [Pipeworx](https://pipeworx.io) — an MCP gateway connecting AI agents to 1394+ live data sources.
 
 ## Tools
 
-| Tool | Description |
-|------|-------------|
-| `list_sports` | List all sports tracked by TheSportsDB. |
-| `list_leagues` | List leagues, optionally filtered by sport name and/or country. |
-| `search_teams` | Search teams by name (full or partial). |
-| `get_team` | Team profile by ID. |
-| `league_teams` | All teams in a league. |
-| `search_players` | Search players by name. |
-| `get_player` | Player profile by ID. |
-| `team_events_last` | Last 5 events for a team. |
-| `team_events_next` | Next 5 events for a team. |
-| `events_by_day` | All events on a given date, optionally filtered by sport or league. |
-| `league_table` | Standings table for a league/season. |
+- `list_sports()` / `list_leagues(sport?, country?)`
+- `search_teams(query)`, `get_team(team_id)`, `league_teams(league_id)`
+- `search_players(query)` / `get_player(player_id)`
+- `team_events_last(team_id)` / `team_events_next(team_id)`
+- `events_by_day(date, sport?, league?)`
+- `league_table(league_id, season?)`
+
+## Auth
+
+The free public tier uses API key `3` (well-known, no signup required). Pipeworx defaults to this. For higher rate limits / extra endpoints register at https://www.thesportsdb.com/ and BYO via `?_apiKey=<key>`.
+
+## Data source
+
+`https://www.thesportsdb.com/api/v1/json/<apiKey>/`
 
 ## Quick Start
 
@@ -34,7 +35,7 @@ Add to your MCP client (Claude Desktop, Cursor, Windsurf, etc.):
 }
 ```
 
-Or connect to the full Pipeworx gateway for access to all 673+ data sources:
+Or connect to the full Pipeworx gateway for access to all 1394+ data sources:
 
 ```json
 {
@@ -58,7 +59,7 @@ The gateway picks the right tool and fills the arguments automatically.
 
 ## More
 
-- [All tools and guides](https://github.com/pipeworx-io/examples)
+- [Docs and guides](https://pipeworx.io/docs)
 - [pipeworx.io](https://pipeworx.io)
 
 ## License
