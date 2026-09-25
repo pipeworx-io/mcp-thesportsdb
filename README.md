@@ -2,7 +2,7 @@
 
 TheSportsDB MCP — sports catalog across 50+ leagues: teams, players, events, venues, league tables. Free tier with public key.
 
-Part of [Pipeworx](https://pipeworx.io) — an MCP gateway connecting AI agents to 1476+ live data sources.
+Part of [Pipeworx](https://pipeworx.io) — an MCP gateway connecting AI agents to 1679+ live data sources.
 
 ## Tools
 
@@ -20,6 +20,51 @@ The free public tier uses API key `3` (well-known, no signup required). Pipeworx
 ## Data source
 
 `https://www.thesportsdb.com/api/v1/json/<apiKey>/`
+
+## Match detail (event_detail, event_timeline, event_stats, event_lineup)
+
+Four per-match tools for settling questions about a single fixture: the
+scoreline and venue (`event_detail`), goals with scorer/assist/minute plus cards
+and substitutions (`event_timeline`), team-by-team statistics (`event_stats`),
+and the starting eleven plus substitutes (`event_lineup`). All take a
+TheSportsDB `event_id` — find one with `events_by_day`, `team_events_last` or
+`team_events_next`.
+
+### They are NOT premium-gated — but the free tier truncates them
+
+Measured 2026-09-12 on the free public key: all four endpoints return real data,
+so no key is required and none of these tools refuses for want of one.
+
+What the free tier *does* do is cap each array at **5 rows, silently**. On
+idEvent 2594568 (Bayern Munich vs Bodø/Glimt, final score **5-0**) the timeline
+returns 5 rows, the earliest at minute 45, containing **2 goals** — every
+first-half goal is absent. `event_stats` returns 5 statistics and does not
+include shots on goal, corners or possession. `event_lineup` returns 5 players.
+`intHomeScoreHT` / `intAwayScoreHT` come back null.
+
+So for a settlement workload a supporter key matters — for **completeness**, not
+for access. Pass it as `_apiKey`.
+
+### How the tools tell you
+
+`event_timeline` cross-checks the goals it can see against the event's own final
+score. When they disagree it returns `complete: false` with
+`goals_in_timeline`, `goals_in_final_score` and a note saying not to settle a
+first-scorer or half-time question from it. That is proof of truncation, not a
+guess. `event_stats` and `event_lineup` have no equivalent invariant, so they
+report `complete: null` when exactly 5 rows come back — which may be a whole
+small result or a truncated large one, and from the response alone those are
+indistinguishable.
+
+### Coverage is per-competition
+
+A match the source has not covered returns `found: false` with a reason, never
+an error and never a wrong answer. The tools distinguish two cases that arrive
+identically from upstream (both are a bare `null`): `no_timeline_for_event` —
+the match exists and is named back to you, the source just has no timeline for
+that competition — versus `no_data_and_event_unconfirmed`, where the event id
+could not be confirmed either. For a caller settling a market those are opposite
+conclusions: "ask a different source" versus "you have the wrong match".
 
 ## Quick Start
 
@@ -65,9 +110,39 @@ directly, instead of just this one's:
 }
 ```
 
-Both URLs reach the same gateway and the same 1476+ data sources. The
+Both URLs reach the same gateway and the same 1679+ data sources. The
 only difference is which pack's tools are listed **directly**; `ask_pipeworx`
 reaches all of them from either one.
+
+## No MCP client? Call it over HTTP
+
+This pack takes your own API key (`_apiKey`) — we don't front one for it, so there's no curl here that would run without it. Inspect any tool: `GET https://gateway.pipeworx.io/v1/tools/thesportsdb_list_sports`. Find one: `POST https://gateway.pipeworx.io/v1/tools/search_packs` with `{"query":"..."}`.
+
+## Standalone (no gateway account)
+
+This package also runs as a local stdio MCP server — no Pipeworx account, no
+gateway round-trip:
+
+```json
+{
+  "mcpServers": {
+    "thesportsdb": {
+      "command": "npx",
+      "args": ["-y", "@pipeworx/mcp-thesportsdb"]
+    }
+  }
+}
+```
+
+Or run it directly to confirm it starts:
+
+```bash
+npx -y @pipeworx/mcp-thesportsdb
+```
+
+It speaks MCP over stdin/stdout and answers `initialize`/`tools/list`/`tools/call`
+for **only** this pack's tools — none of the shared meta-tools the gateway
+connection above adds. Same source, same tools, no ask_pipeworx routing.
 
 ## Using with ask_pipeworx
 
@@ -88,7 +163,3 @@ The gateway picks the right tool and fills the arguments automatically.
 ## License
 
 MIT
-
-## No MCP client? Call it over HTTP
-
-This pack takes your own API key (`_apiKey`) — we don't front one for it, so there's no curl here that would run without it. Inspect any tool: `GET https://gateway.pipeworx.io/v1/tools/thesportsdb_list_sports`. Find one: `POST https://gateway.pipeworx.io/v1/tools/search_packs` with `{"query":"..."}`.

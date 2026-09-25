@@ -3,7 +3,7 @@
   "name": "io.github.pipeworx-io/thesportsdb",
   "title": "Thesportsdb",
   "description": "TheSportsDB MCP — sports catalog (teams, players, events)",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "websiteUrl": "https://pipeworx.io/packs/thesportsdb",
   "repository": {
     "url": "https://github.com/pipeworx-io/mcp-thesportsdb",
