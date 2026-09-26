@@ -1,6 +1,6 @@
 {
   "name": "@pipeworx/mcp-thesportsdb",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "TheSportsDB MCP — sports catalog (teams, players, events)",
   "type": "module",
   "main": "src/index.ts",
@@ -26,7 +26,7 @@
     "@cloudflare/workers-types": "^4.20260405.1"
   },
   "pipeworx": {
-    "sourceHash": "v1-d0ff17e3a9a0e133be3768a62b255e7b4a7c1130d3377b8fa074d8272f67a260",
-    "sourceCommit": "b0fb3c31386cf0256dcf1e2f1b3440435a87ec35"
+    "sourceHash": "v1-46ce774423d9cabfd25dc89b3be925271ceca4279c7178e069ca41b08bf91b80",
+    "sourceCommit": "66a0692f029179984440cef6938cba7fdd41d66d"
   }
 }
