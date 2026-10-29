@@ -1,12 +1,20 @@
 {
   "name": "@pipeworx/mcp-thesportsdb",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "TheSportsDB MCP — sports catalog (teams, players, events)",
   "type": "module",
-  "main": "src/index.ts",
-  "types": "src/index.ts",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./tools.json": "./tools.json",
+    "./package.json": "./package.json"
+  },
   "bin": {
     "mcp-thesportsdb": "bin/cli.js"
+  },
+  "files": ["bin/", "lib/", "tools.json", "server.json"],
+  "engines": {
+    "node": ">=18"
   },
   "keywords": ["mcp", "mcp-server", "model-context-protocol", "pipeworx", "thesportsdb"],
   "license": "MIT",
@@ -14,19 +22,12 @@
     "type": "git",
     "url": "git+https://github.com/pipeworx-io/mcp-thesportsdb.git"
   },
-  "scripts": {
-    "typecheck": "tsc --noEmit"
-  },
-  "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.30.0",
-    "tsx": "^4.19.0"
-  },
-  "devDependencies": {
-    "typescript": "^5.9.3",
-    "@cloudflare/workers-types": "^4.20260405.1"
-  },
+  "mcpName": "io.github.pipeworx-io/thesportsdb",
   "pipeworx": {
-    "sourceHash": "v1-46ce774423d9cabfd25dc89b3be925271ceca4279c7178e069ca41b08bf91b80",
-    "sourceCommit": "66a0692f029179984440cef6938cba7fdd41d66d"
+    "mode": "gateway",
+    "slug": "thesportsdb",
+    "gatewaySlug": "thesportsdb",
+    "sourceHash": "v1-326750ef2a62c54f68ed26a4da1366619d12fbd7162e336f177708f9cc51a5ef",
+    "sourceCommit": "f47d581679e1e887373df51ba623f891fbe4c464"
   }
 }
