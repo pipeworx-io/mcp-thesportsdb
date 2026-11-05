@@ -1,6 +1,6 @@
 {
   "name": "@pipeworx/mcp-thesportsdb",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "TheSportsDB MCP — sports catalog (teams, players, events)",
   "type": "module",
   "main": "lib/index.js",
@@ -27,7 +27,7 @@
     "mode": "gateway",
     "slug": "thesportsdb",
     "gatewaySlug": "thesportsdb",
-    "sourceHash": "v1-326750ef2a62c54f68ed26a4da1366619d12fbd7162e336f177708f9cc51a5ef",
-    "sourceCommit": "f47d581679e1e887373df51ba623f891fbe4c464"
+    "sourceHash": "v1-4a400928d5368f58168d908cce8a60dc5e3ca7ac0f8089b67ef7987857824840",
+    "sourceCommit": "868e119d526d5409447b7ee2149afba7eb9d2593"
   }
 }
